@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="c_fabricMethod.cpp">
+    <ClCompile Include="c_abstractFabric.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>

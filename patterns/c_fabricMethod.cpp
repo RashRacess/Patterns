@@ -3,13 +3,13 @@
 #include <memory>
 
 
-class Transport {
+class ITransport {
 public:
-	virtual ~Transport() {}
+	virtual ~ITransport() {}
 	virtual std::string deliver() = 0;
 };
 
-class Car :public Transport {
+class Car :public ITransport {
 private:
 	std::string name;
 
@@ -20,7 +20,7 @@ public:
 	}
 };
 
-class Ship : public Transport {
+class Ship : public ITransport {
 private:
 	std::string name;
 public:
@@ -31,20 +31,13 @@ public:
 
 };
 
-std::unique_ptr<Transport> createTransport(std::string name) {
-	if (name == "car")
-		return std::make_unique<Car>();
-	else if (name == "ship")
-		return std::make_unique<Ship>();
-}
-
-void showDeliver(Transport& tr) {
+void showDeliver(ITransport& tr) {
 	std::cout << tr.deliver() << std::endl;
 }
 
 int main() {
 
-	Transport* tr = new Car();
+	ITransport* tr = new Car();
 	showDeliver(*tr);
 	delete tr;
 	tr = nullptr;
