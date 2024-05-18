@@ -8,6 +8,7 @@ class IComponent {
 public:
 	std::string data;
 	IComponent(const std::string& value) : data(value) {}
+	virtual ~IComponent() { std::cout << "IComponent destructor" << std::endl; }
 };
 
 class Bun : public IComponent {
@@ -51,13 +52,14 @@ public:
 		return compound;
 	}
 	~Burger() {
-		for (auto it = compound.begin(); it != compound.end(); ++it) {
+		for (auto it = compound.begin(); it != compound.end(); it++) {
 			if (*it) {
 				delete* it;
 				*it = nullptr;
 			}
 		}
 		compound.clear();
+		std::cout << "Burger destructor" << std::endl;
 	}
 };
 
@@ -71,7 +73,7 @@ public:
 	virtual void addSalad() = 0;
 
 	virtual Burger* getBurger() = 0;
-	virtual ~IDeveloper() {}
+	virtual ~IDeveloper() { std::cout << "IDeveloper destructor" << std::endl; }
 };
 
 class VigaterianDeveloper : public IDeveloper {
@@ -99,10 +101,9 @@ public:
 		return burger;
 	}
 	~VigaterianDeveloper() {
-		if (burger) {
-			delete burger;
-			burger = nullptr;
-		}
+		delete burger;
+		burger = nullptr;
+		std::cout << "VigaterianDeveloper destructor" << std::endl;
 	}
 };
 
@@ -134,11 +135,11 @@ public:
 		return burger;
 	}
 	~OrdinaryDeveloper() {
-		if (burger)
-			if (burger) {
-				delete burger;
-				burger = nullptr;
-			}
+		if (burger) {
+			delete burger;
+			burger = nullptr;
+			std::cout << "OrdinaryDeveloper destructor" << std::endl;
+		}
 	}
 };
 
@@ -170,7 +171,9 @@ public:
 		if (developer) {
 			delete developer;
 			developer = nullptr;
+			std::cout << "Director destructor" << std::endl;
 		}
+
 	}
 };
 
@@ -183,6 +186,8 @@ int main() {
 	for (auto& component : compound) {
 		std::cout << component->data << "\t";
 	}
+
+	std::cout << std::endl;
 
 	delete director;
 
