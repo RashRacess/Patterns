@@ -1,53 +1,75 @@
 ﻿#include <iostream>
 #include <string>
 
-class IAnimal {
+class IShape {
 public:
-	virtual void setName(std::string name) = 0;
-	virtual std::string getName() = 0;
-	virtual IAnimal* clone() const = 0;
+	virtual double GetPerimetr() = 0;
+	virtual double GetSquare() = 0;
+	virtual IShape* Clone() = 0;
 
-	virtual ~IAnimal() { std::cout << "IAnimal destructor" << std::endl; }
+	virtual ~IShape() { std::cout << "IShape destructor" << std::endl; }
 };
 
-class Sheep : public IAnimal {
+class Rectangle : public IShape {
 private:
-	std::string name;
-	Sheep(const Sheep& sheep) {
-		this->name = sheep.name;
-	}
+	double x;
+	double y;
 
+	Rectangle(const Rectangle& rect) {
+		this->x = rect.x;
+		this->y = rect.y;
+	}
 public:
-	Sheep() {}
+	Rectangle() : x{ 0 }, y{ 0 } {}
 
-	void setName(std::string name) override {
-		this->name = name;
+	double GetPerimetr() override { return 2 * (x + y); }
+	double GetSquare() override { return x * y; }
+	Rectangle* Clone() override {
+		return new Rectangle(*this);
 	}
 
-	std::string getName() override {
-		return name;
-	}
-	
-	Sheep* clone() const {
-		return new Sheep(*this);
-	}
-	
-	~Sheep() {
-		std::cout << "Sheep destructor" << std::endl;
+	double GetX() { return x; }
+	void SetX(double x) { this->x = x; }
+
+	double GetY() { return y; }
+	void SetY(double y) { this->y = y; }
+
+	~Rectangle() {
+		std::cout << "Recangle destructor" << std::endl;
 	}
 };
 
-int main()
-{
-	Sheep* dolly = new Sheep();
-	std::cout << dolly << std::endl;
+class Circle : public IShape {
+private:
+	double radius;
 
-	Sheep* clone = dolly->clone();
+	Circle(const Circle& circle) {
+		this->radius = circle.radius;
+	}
+
+public:
+	Circle() : radius{ 0 } {}
+
+	double GetPerimetr() override { return 2 * 3.14 * radius; }
+	double GetSquare() override { return 3.14 * radius * radius; }
+	Circle* Clone() override { return new Circle(*this); }
+
+	double GetRadius() { return radius; }
+	void SetRadius(double r) { this->radius = r; }
+
+	~Circle() {
+		std::cout << "Circle destructor" << std::endl;
+	}
+};
+
+int main() {
+	Circle* circle = new Circle();
+
+	Circle* clone = circle->Clone();
+
+	std::cout << circle << std::endl;
 	std::cout << clone << std::endl;
 
-
+	delete circle;
 	delete clone;
-	delete dolly;
-
-	return 0;
 }
