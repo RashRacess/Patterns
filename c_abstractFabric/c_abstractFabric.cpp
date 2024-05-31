@@ -1,16 +1,9 @@
 ﻿#include <iostream>
-#include <string>
-#include <conio.h>
+#include<string>
 
 class IChair;
 class ISofa;
 
-class IFurnitureFactory {
-public:
-	virtual IChair* CreateChair() = 0;
-	virtual ISofa* CreateSofa() = 0;
-	virtual ~IFurnitureFactory() {}
-};
 
 class IChair {
 public:
@@ -18,110 +11,127 @@ public:
 	virtual ~IChair() {}
 };
 
-class ISofa {
-public:
-	virtual std::string About() = 0;
-	virtual ~ISofa() {}
-};
-
-class VictorianChair :public IChair {
+class VictoriunChair : public IChair {
 public:
 	std::string About() override {
-		return "I'm victorian chair";
-	}
-};
-
-class VictorianSofa :public ISofa {
-public:
-	std::string About() override {
-		return "I'm victorian sofa";
+		return "i'm victoriun chair";
 	}
 };
 
 class ModernChair : public IChair {
 public:
 	std::string About() override {
-		return "I'm modern chair";
+		return "i'm modern chair";
 	}
 };
 
-class ModernSofa :public ISofa {
+class VisantiunChair : public IChair {
 public:
 	std::string About() override {
-		return "I'm modern sofa";
+		return "i'm visantiun chair";
 	}
+};
+
+
+class ISofa {
+public:
+	virtual std::string About() = 0;
+	virtual ~ISofa() {}
+};
+
+class VictoriunSofa : public ISofa {
+public:
+	std::string About() override {
+		return "i'm victoriun sofa";
+	}
+};
+
+class ModernSofa : public ISofa {
+public:
+	std::string About() override {
+		return "i'm modern sofa";
+	}
+};
+
+class VisantiunSofa : public ISofa {
+public:
+	std::string About() override {
+		return "i'm visantiun sofa";
+	}
+};
+
+
+class IFurnitureFactory {
+public:
+	virtual IChair* createChair() = 0;
+	virtual ISofa* createSofa() = 0;
+
+	virtual ~IFurnitureFactory() {}
+};
+
+class VictoriunFurnitureFactory : public IFurnitureFactory {
+public:
+	VictoriunChair* createChair() override {
+		return new VictoriunChair();
+	}
+
+	VictoriunSofa* createSofa() override {
+		return new VictoriunSofa();
+	}
+
+	~VictoriunFurnitureFactory() {	}
 };
 
 class ModernFurnitureFactory : public IFurnitureFactory {
 public:
-	IChair* CreateChair() override {
+	ModernChair* createChair() override {
 		return new ModernChair();
 	}
 
-	ISofa* CreateSofa() override {
+	ModernSofa* createSofa() override {
 		return new ModernSofa();
 	}
+
+	~ModernFurnitureFactory() {}
 };
 
-class VictorianFurnitureFactory : public IFurnitureFactory {
+class VisantiunFurnitureFactory : public IFurnitureFactory {
 public:
-	IChair* CreateChair() override {
-		return new VictorianChair();
+	VisantiunChair* createChair() override {
+		return new VisantiunChair();
 	}
 
-	ISofa* CreateSofa() override {
-		return new VictorianSofa();
+	VisantiunSofa* createSofa() override {
+		return new VisantiunSofa();
 	}
+
+	~VisantiunFurnitureFactory() {}
 };
 
-class ComplectOfFurniture {
-private:
-	IChair* chair;
-	ISofa* sofa;
+class Complect {
+	IChair* chair_;
+	ISofa* sofa_;
 public:
-	ComplectOfFurniture(IFurnitureFactory* factory) {
-		chair = factory->CreateChair();
-		sofa = factory->CreateSofa();
+	Complect(IFurnitureFactory* factory) {
+		chair_ = factory->createChair();
+		sofa_ = factory->createSofa();
 	}
 
-	std::string ShowInfoAboutComplect() {
-		return chair->About() + " " + sofa->About();
+	std::string ShowAll() {
+		return chair_->About() + "\t" + sofa_->About();
 	}
-
-	~ComplectOfFurniture() {
-		if (chair)
-			delete chair;
-		if (sofa)
-			delete sofa;
+	~Complect()
+	{
+		delete chair_;
+		delete sofa_;
 	}
 };
 
+int main() {
+	IFurnitureFactory* factory = new VisantiunFurnitureFactory();
+	Complect* complect = new Complect(factory);
 
-int main()
-{
-	IFurnitureFactory* factory = new ModernFurnitureFactory();
-	ComplectOfFurniture* cof = new ComplectOfFurniture(factory);
-	std::cout << cof->ShowInfoAboutComplect() << std::endl;
-
-	delete factory;
-	delete cof;
-	factory = nullptr;
-	cof = nullptr;
-
-
-	_getch();
-
-
-	factory = new VictorianFurnitureFactory();
-	cof = new ComplectOfFurniture(factory);
-
-	std::cout << cof->ShowInfoAboutComplect() << std::endl;
-
-	delete factory;
-	delete cof;
-	factory = nullptr;
-	cof = nullptr;
-
+	std::cout << complect->ShowAll() << std::endl;
 
 	return 0;
 }
