@@ -130,8 +130,21 @@ public:
 int main() {
 	IFurnitureFactory* factory = new VisantiunFurnitureFactory();
 	Complect* complect = new Complect(factory);
-
 	std::cout << complect->ShowAll() << std::endl;
+	delete complect;
+	delete factory;
+
+	factory = new ModernFurnitureFactory();
+	complect = new Complect(factory);
+	std::cout << complect->ShowAll() << std::endl;
+	delete complect;
+	delete factory;
+
+	factory = new VictoriunFurnitureFactory();
+	complect = new Complect(factory);
+	std::cout << complect->ShowAll() << std::endl; 
+	delete complect;
+	delete factory;
 
 	return 0;
 }

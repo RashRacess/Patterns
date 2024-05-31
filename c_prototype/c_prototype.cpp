@@ -7,7 +7,7 @@ public:
 	virtual double GetSquare() = 0;
 	virtual IShape* Clone() = 0;
 
-	virtual ~IShape() { std::cout << "IShape destructor" << std::endl; }
+	virtual ~IShape() { }
 };
 
 class Rectangle : public IShape {
@@ -34,9 +34,7 @@ public:
 	double GetY() { return y; }
 	void SetY(double y) { this->y = y; }
 
-	~Rectangle() {
-		std::cout << "Recangle destructor" << std::endl;
-	}
+	~Rectangle() {}
 };
 
 class Circle : public IShape {
@@ -57,9 +55,7 @@ public:
 	double GetRadius() { return radius; }
 	void SetRadius(double r) { this->radius = r; }
 
-	~Circle() {
-		std::cout << "Circle destructor" << std::endl;
-	}
+	~Circle() {	}
 };
 
 int main() {
@@ -67,8 +63,8 @@ int main() {
 
 	Circle* clone = circle->Clone();
 
-	std::cout << circle << std::endl;
-	std::cout << clone << std::endl;
+	std::cout << circle << " - " << circle->GetPerimetr() << std::endl;
+	std::cout << clone << " - " << circle->GetPerimetr() << std::endl;
 
 	delete circle;
 	delete clone;

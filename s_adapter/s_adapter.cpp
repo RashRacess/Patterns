@@ -5,7 +5,7 @@ class Square {
 private:
 	int x_;
 public:
-	Square() : x_{ 0 } { std::cout << "Square constuctor" << std::endl; }
+	Square() : x_{ 0 } { }
 	Square(int x) {
 		x_ = x;
 	}
@@ -21,10 +21,9 @@ class Circle {
 private:
 	double radius_;
 public:
-	Circle() : radius_{0} { std::cout << "Circle constuctor" << std::endl; }
+	Circle() : radius_{0} { }
 	Circle(double radius) {
 		radius_ = radius;
-		std::cout << "Circle constuctor" << std::endl;
 	}
 	void SetRadius(double radius) {
 		this->radius_ = radius;
@@ -38,13 +37,9 @@ class AdapterForCircle : public Circle {
 private:
 	Circle* circle_;
 public:
-	AdapterForCircle(Circle* circle) : circle_{ new Circle(*circle) } {
-		std::cout << "AdapterForCircle constructor" << std::endl;
-	}
+	AdapterForCircle(Circle* circle) : circle_{ new Circle(*circle) } {	}
 
-	AdapterForCircle(const Square& square) : circle_{ new Circle(square.GetX()) } {
-		std::cout << "AdapterForCircle constructor" << std::endl;
-	}
+	AdapterForCircle(const Square& square) : circle_{ new Circle(square.GetX()) } {	}
 
 	AdapterForCircle& operator=(const Square& square) {
 		this->SetRadius(square.GetX());
@@ -55,14 +50,12 @@ public:
 	}
 	~AdapterForCircle() {
 		delete circle_;
-		std::cout << "AdapterForCircle destructor" << std::endl;
 	}
 };
 
 int main() {
 	Square* square = new Square(6);
 	Circle* circle = new Circle();
-
 
 	AdapterForCircle* adapter = new AdapterForCircle(circle);
 	*adapter = *square;

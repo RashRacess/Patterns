@@ -89,10 +89,9 @@ int main() {
 	ITransport* tr = new Car();
 	tr->DeliverBy();
 	
-	Car* car = dynamic_cast<Car*>(tr);
-
-	std::cout << car->GetBrand();
-
-
 	delete tr;
+
+	tr = new Ship();
+	tr->DeliverBy();
+	delete tr;	
 }

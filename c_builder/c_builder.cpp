@@ -8,7 +8,7 @@ class IComponent {
 public:
 	std::string data;
 	IComponent(const std::string& value) : data(value) {}
-	virtual ~IComponent() { std::cout << "IComponent destructor" << std::endl; }
+	virtual ~IComponent() { }
 };
 
 class Bun : public IComponent {
@@ -59,7 +59,6 @@ public:
 			}
 		}
 		compound.clear();
-		std::cout << "Burger destructor" << std::endl;
 	}
 };
 
@@ -73,7 +72,7 @@ public:
 	virtual void addSalad() = 0;
 
 	virtual Burger* getBurger() = 0;
-	virtual ~IDeveloper() { std::cout << "IDeveloper destructor" << std::endl; }
+	virtual ~IDeveloper() { }
 };
 
 class VigaterianDeveloper : public IDeveloper {
@@ -103,7 +102,6 @@ public:
 	~VigaterianDeveloper() {
 		delete burger;
 		burger = nullptr;
-		std::cout << "VigaterianDeveloper destructor" << std::endl;
 	}
 };
 
@@ -138,7 +136,6 @@ public:
 		if (burger) {
 			delete burger;
 			burger = nullptr;
-			std::cout << "OrdinaryDeveloper destructor" << std::endl;
 		}
 	}
 };
@@ -171,7 +168,6 @@ public:
 		if (developer) {
 			delete developer;
 			developer = nullptr;
-			std::cout << "Director destructor" << std::endl;
 		}
 
 	}
